@@ -10,7 +10,7 @@ import android.view.View;
 
 
 public class MainActivity extends Activity {
-    private static final String TAG = "HelloService";
+    private static final String TAG = "mainActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,6 +1,7 @@
 package com.example.dianachang.emergicare;
 import android.app.Service;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
@@ -8,7 +9,7 @@ import android.widget.Toast;
 public class MyService extends Service {
 
     private static final String TAG = "HelloService";
-
+    private CallReceiver callReceiver;
     private boolean isRunning  = false;
 
     @Override
@@ -24,16 +25,25 @@ public class MyService extends Service {
         Log.i(TAG, "Service onStartCommand");
         Toast.makeText(this, "Start Command", Toast.LENGTH_LONG).show();
 
+        callReceiver = new CallReceiver(this);
+
+        int res = super.onStartCommand(intent,flags, startId);
+        callReceiver.start();
+        return res;
+
         //Creating new thread for my service
         //Always write your long running tasks in a separate thread, to avoid ANR
-        new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
 
+                Log.i(TAG, "Running");
+                Intent intent = new Intent(MyService.this, CallReceiver.class);
+                startService(intent);
 
                 //Your logic that service will perform will be placed here
                 //In this example we are just looping and waits for 1000 milliseconds in each loop.
-                for (int i = 0; i < 5; i++) {
+                for (int i = 0; i < 30; i++) {
                     try {
                         Thread.sleep(1000);
                     } catch (Exception e) {
@@ -45,11 +55,12 @@ public class MyService extends Service {
                 }
 
                 //Stop service once it finishes its task
-                stopSelf();
-            }
+                //stopSelf();
+            \
         }).start();
 
         return Service.START_STICKY;
+        */
     }
 
 
@@ -66,4 +77,5 @@ public class MyService extends Service {
 
         Log.i(TAG, "Service onDestroy");
     }
+
 }
