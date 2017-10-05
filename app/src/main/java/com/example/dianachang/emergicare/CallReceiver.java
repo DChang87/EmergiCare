@@ -29,8 +29,6 @@ public class CallReceiver extends Activity {
     private class CallListener extends PhoneStateListener {
         @Override
         public void onCallStateChanged(int state, String incomingNumber) {
-           // Log.i(TAG,"permission: "+ ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_PHONE_STATE));
-            //Log.i(TAG,"permission: "+ ContextCompat.checkSelfPermission(ctx, Manifest.permission.READ_PHONE_STATE));
             Log.i(TAG, "" + state);
             Log.i(TAG, "N" + incomingNumber);
             super.onCallStateChanged(state, incomingNumber);
@@ -39,19 +37,16 @@ public class CallReceiver extends Activity {
                 Log.i(TAG, "RINGING, number: " + incomingNumber);
             }
             if(TelephonyManager.CALL_STATE_OFFHOOK == state) {
-                //wait for phone to go offhook (probably set a boolean flag) so you know your app initiated the call.
                 Log.i(TAG, "OFFHOOK");
                 Log.i(TAG, incomingNumber);
             }
             if(TelephonyManager.CALL_STATE_IDLE == state) {
-                //when this state occurs, and your flag is set, restart your app
                 Log.i(TAG, "IDLE");
             }
         }
     }
     public void start() {
         CallListener callListener = new CallListener();
-//        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_PHONE_STATE}, 0);
         TelephonyManager mTM = (TelephonyManager)ctx.getSystemService(Context.TELEPHONY_SERVICE);
         mTM.listen(callListener, PhoneStateListener.LISTEN_CALL_STATE);
     }
