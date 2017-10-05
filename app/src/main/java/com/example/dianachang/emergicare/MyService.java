@@ -30,37 +30,6 @@ public class MyService extends Service {
         int res = super.onStartCommand(intent,flags, startId);
         callReceiver.start();
         return res;
-
-        //Creating new thread for my service
-        //Always write your long running tasks in a separate thread, to avoid ANR
-        /*new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                Log.i(TAG, "Running");
-                Intent intent = new Intent(MyService.this, CallReceiver.class);
-                startService(intent);
-
-                //Your logic that service will perform will be placed here
-                //In this example we are just looping and waits for 1000 milliseconds in each loop.
-                for (int i = 0; i < 30; i++) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (Exception e) {
-                    }
-
-                    if(isRunning){
-                        Log.i(TAG, "Service running");
-                    }
-                }
-
-                //Stop service once it finishes its task
-                //stopSelf();
-            \
-        }).start();
-
-        return Service.START_STICKY;
-        */
     }
 
 
